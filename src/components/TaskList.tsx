@@ -19,7 +19,7 @@ export function TaskList() {
 
     let randomId = [];
     for (let i = 0; i < 5; i++) {
-      randomId.push(Math.floor(Math.random() * 9));
+      randomId.push(Math.floor(Math.random() * 9) + 1);
     };
 
     const id = Number(randomId.join(''));
@@ -27,21 +27,25 @@ export function TaskList() {
 
     setTasks(old => [object, ...old]);
     setNewTaskTitle('');
-  }
+  };
 
   function handleToggleTaskCompletion(id: number) {
-    // Altere entre `true` ou `false` o campo `isComplete` de uma task com dado ID
-  }
+    const mapTasks = tasks.map(task => task.id === id ? {
+      ...task, isComplete: !task.isComplete
+    } : task);
+
+    setTasks(mapTasks);
+  };
 
   function handleRemoveTask(id: number) {
     const tasksFilter = [];
 
     tasks.forEach(task => {
-      if (task.id === id) tasksFilter.push(task);
+      if (task.id !== id) tasksFilter.push(task);
     });
 
     setTasks(tasksFilter);
-  }
+  };
 
   return (
     <section className="task-list container">
